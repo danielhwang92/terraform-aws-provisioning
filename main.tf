@@ -34,12 +34,23 @@ resource "aws_security_group" "instance" {
   name = "terraform-security-group-example"
   
   ingress {
-    from_port = 8080
-    to_port = 8080
+    from_port = var.server-port
+    to_port = var.server-port
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
 
   }
+}
+
+variable "server-port" {
+  description = "HTTP request port"
+  type = number
+  default = 8080
+}
+
+output "public-ip" {
+  value = aws_instance.example.public_ip
+  description = "Public IP of the web server"
 }
 
 
